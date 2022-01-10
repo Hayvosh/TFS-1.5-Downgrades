@@ -3074,7 +3074,7 @@ void ProtocolGame::AddCreature(NetworkMessage& msg, const Creature* creature, bo
 	}
 
 	LightInfo lightInfo = creature->getCreatureLight();
-	msg.addByte(player->isAccessPlayer() ? 0xFF : lightInfo.level);
+	msg.addByte(lightInfo.level);
 	msg.addByte(lightInfo.color);
 
 	//msg.add<uint16_t>(creature->getStepSpeed() / 2);
@@ -3210,8 +3210,8 @@ void ProtocolGame::AddCreatureLight(NetworkMessage& msg, const Creature* creatur
 
 	msg.addByte(0x8D);
 	msg.add<uint32_t>(creature->getID());
-	msg.addByte((player->isAccessPlayer() ? 0xFF : lightInfo.level));
-	msg.addByte(lightInfo.color);
+	msg.addByte(player->isAccessPlayer() ? 8 : lightInfo.level);
+	msg.addByte(player->isAccessPlayer() ? 209 : lightInfo.color);
 }
 
 //tile
